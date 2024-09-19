@@ -1,0 +1,250 @@
+/* Basic reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    height: 100vh;
+    overflow: hidden;
+    font-family: 'Calibri', sans-serif;
+}
+
+/* Container to hold both background and dialogue box */
+.visual-novel-container {
+    position: relative;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+}
+
+/* Background image setup */
+.background-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+    transition: opacity 1s ease; /* Transition for the background change */
+}
+
+/* Transition background styling */
+.transition-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    opacity: 0; /* Initially hidden */
+    transition: opacity 1s ease-in; /* Fade-in transition */
+    z-index: 1; /* Ensure it sits above the main background */
+}
+
+/* New corner image styling */
+.corner-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 300px; /* Adjust size as needed */
+    height: auto;
+    z-index: 3; /* Ensure it's above the background but below dialogue */
+}
+
+/* Container for the name box and dialogue box */
+.dialogue-container {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px;
+    box-sizing: border-box;
+    z-index: 4; /* Ensure dialogue box is above other elements */
+}
+
+/* Name box styling */
+.name-box {
+    background: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    padding: 15px;
+    border-radius: 10px;
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    width: auto;
+    max-width: 90%;
+    text-align: left;
+}
+
+/* Dialogue box styling */
+.dialogue-box {
+    position: relative;
+    width: calc(100% - 40px);
+    padding: 30px;
+    background: rgba(0, 0, 0, 0.7);
+    color: #fff;
+    border-radius: 15px;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5);
+    word-wrap: break-word;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 150px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    z-index: 5; /* Ensure dialogue box is above other elements */
+}
+
+/* Arrow styling with pulsate effect */
+.dialogue-box::after {
+    content: '';
+    position: absolute;
+    bottom: 20px;
+    right: 30px;
+    width: 0;
+    height: 0;
+    border-top: 10px solid transparent;
+    border-left: 15px solid rgba(255, 255, 255, 0.7);
+    border-bottom: 10px solid transparent;
+    animation: pulsate 1s infinite ease-in-out;
+}
+
+/* Text inside the dialogue box */
+.dialogue-text {
+    margin: 0;
+    white-space: normal;
+    display: block;
+}
+
+/* Each dialogue line initially hidden */
+.dialogue-line {
+    display: none;
+}
+
+/* Character Image container styling */
+.character-image-container {
+    position: absolute;
+    top: 0;
+    right: -30%;
+    height: 100%;
+    width: auto;
+    opacity: 0;
+    transform: translateX(0);
+    transition: right 1s ease-out, opacity 1s ease-out;
+    z-index: 1; /* Ensure it sits below the dialogue box */
+}
+
+/* Character image itself */
+.character-image {
+    height: 100%;
+    width: auto;
+    object-fit: contain; /* Ensure it scales properly on all devices */
+    max-width: 100%; /* Prevent overflow on mobile */
+}
+
+/* Add this class to show the image with slide-in and fade-in effects */
+.character-image-container.show {
+    right: 10%;
+    opacity: 1;
+}
+
+/* Music Note Icon Styling */
+.music-note {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 40px; /* Adjust size as needed */
+    height: 40px; /* Adjust size as needed */
+    background: rgba(255, 255, 255, 0.8); /* Slightly transparent white background */
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.3s ease, color 0.3s ease;
+    z-index: 6; /* Ensure it sits above the dialogue box */
+}
+
+.music-note i {
+    color: #000; /* Black icon */
+    font-size: 20px; /* Size of the icon */
+}
+
+/* Darken the icon on hover */
+.music-note:hover {
+    background: rgba(224, 224, 224, 0.8); /* Slightly darker and still transparent background for hover */
+}
+
+.music-note:hover i {
+    color: #000; /* Keep the icon black on hover */
+}
+
+/* Optional: Make the dialogue box responsive */
+@media (max-width: 768px) {
+    .name-box {
+        font-size: 0.9rem;
+    }
+
+    .dialogue-box {
+        font-size: 1rem;
+        padding: 20px;
+        margin-left: 10px;
+        min-height: 120px; /* Reduce the height for smaller screens */
+    }
+
+    .character-image-container {
+        right: 5%;
+        height: 100%;
+        width: auto;
+    }
+
+    .character-image {
+        height: auto;
+        width: 100%;
+        object-fit: contain; /* Ensures proper fit on mobile */
+    }
+}
+
+/* Further adjustment for very small mobile screens */
+@media (max-width: 480px) {
+    .dialogue-box {
+        font-size: 0.9rem;
+        padding: 15px;
+        min-height: 100px;
+    }
+
+    .name-box {
+        font-size: 0.8rem;
+        padding: 10px;
+    }
+
+    .dialogue-box::after {
+        bottom: 10px;
+        right: 15px;
+        border-left: 10px solid rgba(255, 255, 255, 0.7);
+    }
+}
+
+/* Keyframes for pulsating effect */
+@keyframes pulsate {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Faded class to make the character semi-transparent */
+.character-image-container.faded {
+    opacity: 0.6; /* Adjust the opacity as needed */
+    transition: opacity 1s ease; /* Smooth fading effect */
+}
